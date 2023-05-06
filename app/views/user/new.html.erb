@@ -1,0 +1,39 @@
+<div style="width: 400px">
+  <h2 class="text-center my-3">Add User</h2>
+  <%= form_with(model: @user, url: new_user_path) do |f| %>
+    <div class="field form-group">
+      <%= f.label :email %><br/>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :password %>
+      <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br/>
+      <%= f.password_field :password, autocomplete: "new-password", class: "form-control"%>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :password_confirmation %><br/>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :name %><br/>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :address %><br/>
+      <%= f.text_field :address, class: "form-control" %>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :birthday %><br/>
+      <%= f.date_field :birthday, class: "form-control" %>
+    </div>
+
+    <%= f.submit "Create User" %>
+  <% end %>
+</div>

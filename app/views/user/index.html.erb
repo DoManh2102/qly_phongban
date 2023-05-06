@@ -1,0 +1,46 @@
+<% provide(:title, 'ALl User') %>
+
+<h2 class="text-center py-3">User</h2>
+
+<%= link_to "+ Add New Project", new_user_path %>
+
+<%#= will_paginate %>
+
+<table class="table mt-3">
+  <thead>
+  <tr class="thead-dark text-center">
+    <th scope="col">ID</th>
+    <th scope="col">Name</th>
+    <th scope="col">Email</th>
+    <th scope="col">Address</th>
+    <th scope="col">Birthday</th>
+    <th scope="col">Role</th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @users.each_with_index do |user, index| %>
+    <tr class="text-center">
+      <td> <%= user.id  %></td>
+      <td> <%= user.name %></td>
+      <td> <%= user.email %></td>
+      <td> <%= user.address %></td>
+      <td> <%= user.birthday %></td>
+      <td> <%= user.role %></td>
+      <td>
+        <%= link_to "Detail", user_path(user) %>
+      </td>
+      <td>
+        <%= link_to "Edit" %>
+      </td>
+      <!--      <td>-->
+      <%# if current_user.admin? %>
+      <%#= button_to 'Destroy', user, method: :delete, data: { confirm: "Are you sure?" } %>
+      <%# end %>
+      <!--      </td>-->
+    </tr>
+  <% end %>
+  </tbody>
+</table>

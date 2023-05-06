@@ -1,0 +1,45 @@
+<% provide(:title, 'All Project') %>
+
+<h2 class="text-center py-3">All Project</h2>
+
+<%= link_to "+ Add New Project", new_project_path %>
+<%#= will_paginate %>
+
+<table class="table mt-3">
+  <thead>
+  <tr class="thead-dark text-center">
+    <th scope="col">ID</th>
+    <th scope="col">Name</th>
+    <th scope="col">Leader Project</th>
+    <th scope="col">Department</th>
+    <th scope="col">Status</th>
+    <th scope="col">Project Time</th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @projects.each_with_index do |project, index| %>
+    <tr class="text-center">
+      <td> <%= project.id %></td>
+      <td> <%= project.name %></td>
+      <td> <%=  %></td>
+      <td> <%= Department.find_by(id: project.department_id)&.name %></td>
+      <td> <%= project.status %></td>
+      <td> <%=  %></td>
+      <td>
+        <%= link_to "Detail", project_path(project) %>
+      </td>
+      <td>
+        <%= link_to "Edit", edit_project_path(project) %>
+      </td>
+      <!--      <td>-->
+      <%# if current_user.admin? %>
+      <%#= button_to 'Destroy', user, method: :delete, data: { confirm: "Are you sure?" } %>
+      <%# end %>
+      <!--      </td>-->
+    </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,38 @@
+.btn-transparent{
+    background-color: transparent;
+    color: blue;
+}
+
+.btn-secondary{
+    padding: 5px 12px;
+}
+
+.dropdown-menu li{
+    margin-top: 5px;
+}
+
+#project_department_id{
+    padding: 2px 10px;
+    height: 28px;
+}
+
+.btn-add a{
+    color: #fff;
+    text-decoration: none;
+}
+
+.scrollable {
+    max-height: 150px;
+    overflow-y: scroll;
+}
+
+#user_project_isLeader{
+    width: 150px;
+    border: solid 2px #f0f0f0;
+    border-radius: 4px;
+    display: block;
+    padding: 5px 10px;
+    font-size: 15px;
+    outline: none;
+}
+

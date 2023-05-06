@@ -1,0 +1,27 @@
+<div style="width: 400px; margin-top: 20px">
+  <h2>Edit Project</h2>
+  <%= form_with(model: @project, local: true) do |f| %>
+    <div class="form-group">
+      <%= f.label :Project_name %>
+      <%= f.text_field :name, class: 'form-control col-md-7' %>
+    </div>
+
+    <div class="field form-group d-flex">
+      <%= f.label :department_id, class:"mr-2" %><br/>
+      <%= f.collection_select :department_id, Department.all, :id, :name, include_blank: true %>
+    </div>
+
+    <div class="field form-group d-flex">
+      <%= f.label :status, class:"mr-5" %><br/>
+      <div>
+        <%= f.radio_button :status, true %>
+        <%= f.label :status, "Done" %>
+        <br>
+        <%= f.radio_button :status, false %>
+        <%= f.label :status, "Processing" %>
+      </div>
+    </div>
+
+    <%= f.submit "Update", class: "btn btn-primary" %>
+  <% end %>
+</div>

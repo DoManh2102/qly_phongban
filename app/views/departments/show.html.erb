@@ -1,0 +1,96 @@
+<h2 class="text-center">Information Department</h2>
+<h4>
+  ** <%= @department.name %> **
+</h4>
+<strong>Leader: </strong> <%= @user_leader&.name %><br/>
+<strong>Number member: </strong> <%= @department.user.length %><br/>
+<strong>Number project: </strong> <%= @department.projects.length %><br/>
+<strong>Description: </strong> <%= @department.description %><br/>
+
+<br>
+<h4>List User to Department</h4>
+<table class="table mt-3">
+  <thead>
+  <tr class="thead-dark text-center">
+    <th scope="col">ID</th>
+    <th scope="col">Name</th>
+    <th scope="col">Email</th>
+    <th scope="col">Role</th>
+    <th scope="col">Description</th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <% @users.each_with_index do |user, index| %>
+    <tr class="text-center">
+      <td> <%= user.id %></td>
+      <td> <%= user.name %></td>
+      <td> <%= user.email %></td>
+      <%# byebug %>
+      <% if @user_leader&.id == user.id %>
+        <td> PM </td>
+      <% else %>
+        <td><%= user.role %></td>
+      <% end %>
+      <td> <%= user.birthday %></td>
+<!--      <td> <%#= user.role %></td>-->
+      <td>
+        <%= link_to "Detail", user_path(user) %>
+      </td>
+      <td>
+        <%= link_to "Destroy" %>
+      </td>
+      <!-- <td> -->
+      <%# if current_user.admin? %>
+      <%#= button_to 'Destroy', user, method: :delete, data: { confirm: "Are you sure?" } %>
+      <%# end %>
+      <!--</td>-->
+    </tr>
+  <% end %>
+  <tbody>
+  </tbody>
+</table>
+
+<br>
+
+<h4>List Project to Department</h4>
+<table class="table mt-3">
+  <thead>
+  <tr class="thead-dark text-center">
+    <th scope="col">ID</th>
+    <th scope="col">Name</th>
+    <th scope="col">Number Member</th>
+    <th scope="col">Leader</th>
+    <th scope="col">Description</th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <% @project.each_with_index do |user, index| %>
+    <tr class="text-center">
+      <td> <%= user.id %></td>
+      <td> <%= user.name %></td>
+      <%# byebug %>
+      <% if @user_leader&.id == user.id %>
+        <td> PM </td>
+      <% else %>
+        <td><%= user.role %></td>
+      <% end %>
+      <td>
+        <%= link_to "Detail" %>
+      </td>
+      <td>
+        <%= link_to "Destroy" %>
+      </td>
+      <!-- <td> -->
+      <%# if current_user.admin? %>
+      <%#= button_to 'Destroy', user, method: :delete, data: { confirm: "Are you sure?" } %>
+      <%# end %>
+      <!--</td>-->
+    </tr>
+  <% end %>
+  <tbody>
+  </tbody>
+</table>

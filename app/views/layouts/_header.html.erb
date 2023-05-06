@@ -1,0 +1,38 @@
+<ul class="nav py-3 bg-dark mb-3">
+  <li class="nav-item">
+    <%= link_to 'Home', root_path, class: "nav-link text-white" %>
+  </li>
+
+  <% if user_signed_in? %>
+    <li class="nav-item">
+      <%= link_to 'Department',departments_path, class: "nav-link text-white" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Project',projects_path, class: "nav-link text-white" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'List User', user_index_path, class: "nav-link text-white" %>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle nav-link text-white" data-toggle="dropdown"> Account <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu pl-3 px-3">
+        <li><%= link_to "Profile", current_user %></li>
+        <li><%= link_to "Edit Profile", edit_user_registration_path(current_user) %></li>
+        <li>
+          <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: "nav-link btn btn-secondary" %>
+        </li>
+      </ul>
+    </li>
+  <% end %>
+
+  <% unless user_signed_in? %>
+    <li class="nav-item">
+      <%= link_to 'Sign Up', new_user_registration_path, class: "nav-link text-white" %>
+    </li>
+
+    <li class="nav-item">
+      <%= link_to 'LogIn', new_user_session_path, class: "nav-link text-white" %>
+    </li>
+  <% end %>
+</ul>

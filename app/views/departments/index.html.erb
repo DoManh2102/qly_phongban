@@ -1,0 +1,47 @@
+<% provide(:title, 'Department') %>
+
+<h2 class="text-center py-3">Department</h2>
+
+<%= link_to "+ Add New Department", new_department_path %>
+<%= will_paginate %>
+
+<table class="table mt-3">
+  <thead>
+  <tr class="thead-dark text-center">
+    <th scope="col">STT</th>
+    <th scope="col">Name</th>
+    <th scope="col">Number Member</th>
+    <th scope="col">Leader</th>
+    <th scope="col">Description</th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @departments.each_with_index do |department, index| %>
+    <tr class="text-center">
+      <td> <%= department.id %></td>
+      <td> <%= department.name %></td>
+      <td> <%= department.user.length %></td>
+      <td>
+        <%= department.user.find_by(id: department.user_id)&.name || "No Leader" %>
+      </td>
+      <td> <%= department.description %></td>
+      <td>
+        <%= link_to "Detail", department_path(department) %>
+      </td>
+      <td>
+        <%= link_to "Edit", edit_department_path(department) %>
+      </td>
+      <td>
+        <%# if current_user.admin? %>
+          <%= button_to 'Destroy', department, method: :delete, data: { confirm: "Are you sure?" } %>
+        <%# end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+

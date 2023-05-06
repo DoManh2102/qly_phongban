@@ -1,0 +1,16 @@
+<h2>Thông tin cá nhân</h2>
+<div class="card" style="width: 22rem">
+<!--  <img class="card-img-top" src="..." alt="Card image cap">-->
+  <div class="card-body">
+    <h5 class="card-title">
+      <%= @user.name %>
+    </h5>
+    <strong>Email: </strong> <%= @user.email %><br/>
+    <strong>Address: </strong> <%= @user.address %><br/>
+    <strong>Birthday: </strong> <%= @user.birthday %><br/>
+    <strong>Role: </strong> <%= @user.role %><br/>
+    <strong>Department: </strong> <%= @user.department&.name %><br/>
+
+  </div>
+</div>
+

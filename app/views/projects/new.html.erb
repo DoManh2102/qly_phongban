@@ -1,0 +1,14 @@
+<% provide(:title, 'Add Project') %>
+<div style="width: 400px">
+  <h2 class="text-center">Add New Project</h2>
+
+  <%= form_with(model: @project, local: true) do |f| %>
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+
+    <%= f.submit 'Add Project', class: "btn btn-secondary" %>
+  <% end %>
+</div>
+
