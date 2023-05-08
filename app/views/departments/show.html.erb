@@ -8,7 +8,12 @@
 <strong>Description: </strong> <%= @department.description %><br/>
 
 <br>
-<h4>List User to Department</h4>
+<h4 class="text-center">List User to Department</h4>
+
+<div class="btn btn-secondary">
+  <%= link_to "+ Edit Number User to Department", edit_department_users_department_path(@department) %>
+</div>
+
 <table class="table mt-3">
   <thead>
   <tr class="thead-dark text-center">
@@ -29,12 +34,12 @@
       <td> <%= user.email %></td>
       <%# byebug %>
       <% if @user_leader&.id == user.id %>
-        <td> PM </td>
+        <td> PM</td>
       <% else %>
         <td><%= user.role %></td>
       <% end %>
       <td> <%= user.birthday %></td>
-<!--      <td> <%#= user.role %></td>-->
+      <!--      <td> <%#= user.role %></td>-->
       <td>
         <%= link_to "Detail", user_path(user) %>
       </td>
@@ -61,23 +66,23 @@
     <th scope="col">ID</th>
     <th scope="col">Name</th>
     <th scope="col">Number Member</th>
-    <th scope="col">Leader</th>
+    <th scope="col">Leader Project</th>
     <th scope="col">Description</th>
     <th scope="col"></th>
     <th scope="col"></th>
     <th scope="col"></th>
   </tr>
   </thead>
-  <% @project.each_with_index do |user, index| %>
+  <% @project.each_with_index do |project, index| %>
     <tr class="text-center">
-      <td> <%= user.id %></td>
-      <td> <%= user.name %></td>
-      <%# byebug %>
-      <% if @user_leader&.id == user.id %>
-        <td> PM </td>
+      <td> <%= index + 1 %></td>
+      <td> <%= project.name %></td>
+      <% if @user_leader&.id == project.id %>
+        <td> PM</td>
       <% else %>
-        <td><%= user.role %></td>
+        <td><%= %></td>
       <% end %>
+      <td> <%= project.user_projects.map %></td>
       <td>
         <%= link_to "Detail" %>
       </td>

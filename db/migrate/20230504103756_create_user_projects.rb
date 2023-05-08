@@ -3,7 +3,7 @@ class CreateUserProjects < ActiveRecord::Migration[6.1]
     create_table :user_projects do |t|
       t.integer :user_id
       t.integer :project_id
-      t.integer :user_id_leader
+      t.boolean :is_leader, default: false
       t.string :start_date
       t.string :end_date
       t.foreign_key :users, foreign_key: true

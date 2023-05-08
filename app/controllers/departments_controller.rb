@@ -45,6 +45,8 @@ class DepartmentsController < ApplicationController
     @department = Department.find(params[:id])
   end
 
+
+
   def remove_user_from_department
     department = Department.find(department_id)
     user = department.user.find(user_id)

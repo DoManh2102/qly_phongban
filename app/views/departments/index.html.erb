@@ -1,6 +1,6 @@
-<% provide(:title, 'Department') %>
+<% provide(:title, 'All Department') %>
 
-<h2 class="text-center py-3">Department</h2>
+<h2 class="text-center py-3">All Department</h2>
 
 <%= link_to "+ Add New Department", new_department_path %>
 <%= will_paginate %>
@@ -21,7 +21,7 @@
   <tbody>
   <% @departments.each_with_index do |department, index| %>
     <tr class="text-center">
-      <td> <%= department.id %></td>
+      <td> <%= index + 1 %></td>
       <td> <%= department.name %></td>
       <td> <%= department.user.length %></td>
       <td>

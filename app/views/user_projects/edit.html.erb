@@ -1,0 +1,17 @@
+<div style="width: 400px; margin-top: 20px">
+  <h2>Change Leader User Project</h2>
+  <%= form_with(model: [@project, @user_project], local: true) do |f| %>
+    <br>
+    <!--    <div class="field form-group d-flex">-->
+    <!--      <%#= f.label :User_leader, class: "mr-2" %><br/>-->
+    <%#= f.collection_select :is_leader, @users_to_project, :user_id, :user_id, include_blank: true %>
+    <!--    </div>-->
+
+    <div class="field form-group d-flex form-leader">
+      <%= f.label :User_leader %>:
+      <%= f.select :is_leader, options_for_select(@user_to_project.map { |user_project| [user_project.user.name, user_project.user.id] }), include_blank: true, class: "form-control col-md-4" %>
+    </div>
+
+    <%= f.submit "Update", class: "btn btn-primary" %>
+  <% end %>
+</div>

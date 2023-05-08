@@ -7,12 +7,9 @@
     </div>
 
     <div class="field form-group">
-      <%= f.label :user_id %><br/>
+      <%= f.label :leader %><br/>
       <%= f.collection_select :user_id, User.where(department_id: @department.id), :id, :name, include_blank: true %>
     </div>
     <%= f.submit "Update", class: "btn btn-primary" %>
   <% end %>
 </div>
-
-
-<!--<h2 class="mt-5">Users in department</h2>-->

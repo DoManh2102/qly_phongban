@@ -9,10 +9,6 @@ class UserProjectsController < ApplicationController
   end
 
   def create
-    puts '------------------------------------------------'
-    p user_project_params
-    puts '------------------------------------------------'
-
     user_project_params[:user_id].each do |user_id|
       UserProject.create(user_id: user_id,
                          project_id: user_project_params[:project_id],
@@ -24,10 +20,28 @@ class UserProjectsController < ApplicationController
   end
 
   def edit
-    
+    @project = Project.find(params[:project_id])
+    @user_project = UserProject.find(params[:id])
+    @user_to_project = UserProject.where(user_id: params[:format], project_id: params[:project_id])
+    puts '------------------------------------------------------'
+    p @user_to_project
+    puts '------------------------------------------------------'
+  end
+
+  def update
+    @user_project = UserProject.find(params[:id])
+    is_leader = user_project_params[:is_leader].include?(@user_project.user_id.to_s) ? true : false
+
+    if @user_project.update(is_leader: is_leader)
+      redirect_to project_path(params[:project_id])
+      flash[:success] = "Update to Success!"
+    else
+      render action: :edit
+      flash[:danger] = "Error!"
+    end
   end
 
   def user_project_params
-    params.require(:user_project).permit(:start_date, :end_date, :project_id, user_id: [])
+    params.require(:user_project).permit(:start_date, :end_date, :project_id, :is_leader, user_id: [])
   end
 end

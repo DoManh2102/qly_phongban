@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2023_05_04_103756) do
   create_table "user_projects", force: :cascade do |t|
     t.integer "user_id"
     t.integer "project_id"
-    t.integer "user_id_leader"
+    t.boolean "is_leader", default: false
     t.string "start_date"
     t.string "end_date"
     t.datetime "created_at", precision: 6, null: false

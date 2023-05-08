@@ -1,0 +1,56 @@
+<% provide(:title, 'Add User to Department') %>
+<div style="width: 600px">
+  <h2 class="text-center">Edit Number User to Department</h2>
+
+  <%= form_with(model: @department, url: department_users_department_path(@department), method: :put) do |f| %>
+    <div class="field form-group scrollable">
+      <%= f.label :user_ids %><br/>
+      <%= f.collection_check_boxes :user_ids, @users, :id, :name do |b| %>
+        <div class="form-check">
+          <% if @users_department.include?(b.object.id) %>
+            <%= b.check_box(class: "form-check-input", checked: true) %>
+          <% else %>
+            <%= b.check_box(class: "form-check-input") %>
+          <% end %>
+          <%= b.label class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+    <%= f.submit 'Add User to Department', class: "btn btn-secondary mt-3" %>
+  <% end %>
+
+  <hr>
+
+  <h2 class="text-center">Users in <%= @department.name %></h2>
+  <% if @users_department.present? %>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @users_department.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td>
+            <% if user.department.user_id == user.id %>
+              <%= 'PM' %>
+            <% else %>
+              <%= 'employee' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No users in this department.</p>
+  <% end %>
+</div>
+
+
+

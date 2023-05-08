@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   resources :user
   # resources :projects
   # resources :user_projects
+  resources :departments do
+    resources :users_department, only: [:edit, :update]
+  end
+
   resources :projects do
     resources :user_projects
   end
