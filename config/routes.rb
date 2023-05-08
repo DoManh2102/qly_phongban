@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   root "static_pages#home"
   devise_for :users
   resources :departments
-  resources :user
+  resources :user, only: [:index, :new, :create, :show, :edit, :update, :destroy]
+
   # resources :projects
   # resources :user_projects
   resources :departments do

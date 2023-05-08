@@ -1,0 +1,15 @@
+<div style="width: 400px; margin-top: 20px">
+  <h2>Edit User <%= @user.name %></h2>
+  <%= form_with(model: @user, local: true) do |f| %>
+    <div class="form-group">
+      <%= f.label :user %>
+      <%= f.text_field :name, class: 'form-control col-md-7' %>
+    </div>
+    <div class="field form-group">
+      <%= f.label :role %><br/>
+      <%= f.select :role, options_for_select(User.roles.keys.map { |r| [r, r] }, @user.role) %>
+    </div>
+
+    <%= f.submit "Update", class: "btn btn-primary" %>
+  <% end %>
+</div>

@@ -1,4 +1,7 @@
 class ProjectsController < ApplicationController
+  rescue_from ActiveRecord::InvalidForeignKey do |exception|
+    redirect_to projects_path, alert: "Error! Unable to delete Parts due to foreign key binding!"
+  end
   def index
     @projects = Project.all
   end
@@ -6,8 +9,11 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @users_project = UserProject.where(project_id: params[:id])
+    # lấy ra mảng user là leader và thuộc project
+    @users_leader = UserProject.where(project_id: @project.id, is_leader: true)
+
     puts '----------------------------------'
-    p @users_project
+    p @users_leader
     puts '----------------------------------'
   end
 
@@ -44,6 +50,17 @@ class ProjectsController < ApplicationController
       flash[:danger] = "Error!"
     end
   end
+
+  def destroy
+    @project = Project.find(params[:id])
+    if @project.destroy
+      flash[:success] = 'Project was successfully deleted.'
+    else
+      flash[:error] = 'Unable to delete Parts due to foreign key binding'
+    end
+    redirect_to projects_path
+  end
+
 
   private
 

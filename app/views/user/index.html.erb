@@ -2,7 +2,7 @@
 
 <h2 class="text-center py-3">User</h2>
 
-<%= link_to "+ Add New Project", new_user_path %>
+<%= link_to "+ Add New User", new_user_path %>
 
 <%#= will_paginate %>
 
@@ -23,7 +23,7 @@
   <tbody>
   <% @users.each_with_index do |user, index| %>
     <tr class="text-center">
-      <td> <%= user.id  %></td>
+      <td> <%= user.id %></td>
       <td> <%= user.name %></td>
       <td> <%= user.email %></td>
       <td> <%= user.address %></td>
@@ -33,13 +33,13 @@
         <%= link_to "Detail", user_path(user) %>
       </td>
       <td>
-        <%= link_to "Edit" %>
+        <%= link_to "Edit", edit_user_path(user) %>
       </td>
-      <!--      <td>-->
-      <%# if current_user.admin? %>
-      <%#= button_to 'Destroy', user, method: :delete, data: { confirm: "Are you sure?" } %>
-      <%# end %>
-      <!--      </td>-->
+      <td>
+        <% if current_user.admin? %>
+          <%= button_to 'Destroy', user, method: :delete, data: { confirm: "Are you sure?" } %>
+        <% end %>
+      </td>
     </tr>
   <% end %>
   </tbody>

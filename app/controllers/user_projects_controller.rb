@@ -6,6 +6,9 @@ class UserProjectsController < ApplicationController
   def new
     @project = Project.find(params[:project_id])
     @user_project = UserProject.new
+    # users không thuộc project và department_id != nil
+    @users_not_project = User.where.not(id: @project.users.pluck(:id)).where.not(department_id: nil)
+    @users_to_project = UserProject.where(project_id: params[:project_id]) # users thuộc project
   end
 
   def create
@@ -15,7 +18,7 @@ class UserProjectsController < ApplicationController
                          start_date: user_project_params[:start_date],
                          end_date: user_project_params[:end_date])
     end
-    redirect_to projects_path(user_project_params[:project_id])
+    redirect_to project_path(user_project_params[:project_id])
     flash[:success] = "Create to Success!"
   end
 
@@ -39,6 +42,13 @@ class UserProjectsController < ApplicationController
       render action: :edit
       flash[:danger] = "Error!"
     end
+  end
+
+  def destroy
+    @user_project = UserProject.find(params[:id])
+    @user_project.destroy
+    redirect_to project_path(params[:project_id])
+    flash[:success] = "Delete user project to Success!"
   end
 
   def user_project_params

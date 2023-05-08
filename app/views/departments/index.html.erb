@@ -11,6 +11,7 @@
     <th scope="col">STT</th>
     <th scope="col">Name</th>
     <th scope="col">Number Member</th>
+    <th scope="col">Number Project</th>
     <th scope="col">Leader</th>
     <th scope="col">Description</th>
     <th scope="col"></th>
@@ -24,6 +25,7 @@
       <td> <%= index + 1 %></td>
       <td> <%= department.name %></td>
       <td> <%= department.user.length %></td>
+      <td> <%= department.projects.length %></td>
       <td>
         <%= department.user.find_by(id: department.user_id)&.name || "No Leader" %>
       </td>

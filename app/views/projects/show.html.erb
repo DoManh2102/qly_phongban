@@ -3,15 +3,24 @@
   ** <%= @project.name %> **
 </h4>
 <strong>Number member: </strong> <%= @project.user_projects.length %><br/>
-<strong>Leader: </strong> <%= @user_leader&.name %><br/>
+
+<div class="d-flex">
+  <strong>Leader: </strong>
+  <div class="ml-2">
+    <% @users_leader.each do |user_leader| %>
+      <%= user_leader.user.name %><br>
+    <% end %>
+  </div>
+</div>
+
 <br>
 
 <h3 class="text-center">List User to Project</h3>
 
 <%# if @project.user_projects.length <= 0 %>
-  <button class="btn-add btn btn-secondary">
-    <%= link_to "+ Add New User to Project", new_project_user_project_path(@project) %>
-  </button>
+<button class="btn-add btn btn-secondary">
+  <%= link_to "+ Add New User to Project", new_project_user_project_path(@project) %>
+</button>
 <%# end %>
 
 <table class="table mt-3">
@@ -19,7 +28,6 @@
   <tr class="thead-dark text-center">
     <th scope="col">STT</th>
     <th scope="col">User Name</th>
-    <!--    <th scope="col">Project</th>-->
     <th scope="col">Role</th>
     <th scope="col">Department</th>
     <th scope="col"></th>
@@ -39,23 +47,16 @@
           <%= "employee" %>
         <% end %>
       </td>
-      <!--        <%#= user_project.is_leader %></td>-->
       <td> <%= user_project.user.department&.name %></td>
-
       <td>
-        <%= link_to "Detail", user_path(user_project) %>
+        <%= link_to "Detail", user_path(user_project.user.id) %>
       </td>
       <td>
         <%= link_to "Edit", edit_project_user_project_path(@project, user_project, user_project.user) %>
       </td>
       <td>
-        <%= link_to "Delete" %>
+        <%= button_to "Destroy", project_user_project_path(@project, user_project), method: :delete, class: "btn btn-secondary" %>
       </td>
-      <!--      <td>-->
-      <%# if current_user.admin? %>
-      <%#= button_to 'Destroy', user, method: :delete, data: { confirm: "Are you sure?" } %>
-      <%# end %>
-      <!--      </td>-->
     </tr>
   <% end %>
   <tbody>

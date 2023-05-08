@@ -6,32 +6,24 @@
     <%= f.hidden_field :project_id, value: @project.id %>
     <div class="field form-group scrollable">
       <%= f.label :user %><br/>
-      <%= f.collection_check_boxes :user_id, User.all, :id, :name do |b| %>
+      <%= f.collection_check_boxes :user_id, @users_not_project, :id, :name do |b| %>
         <div class="form-check">
           <%= b.check_box(class: "form-check-input") %>
           <%= b.label class: "form-check-label" %>
         </div>
       <% end %>
     </div>
+    <% if @users_to_project.length <= 0 %>
+      <div class="field form-group">
+        <%= f.label :start_date %>
+        <%= f.date_field :start_date, class: 'form-control' %>
+      </div>
+      <div class="field form-group">
+        <%= f.label :end_date %>
+        <%= f.date_field :end_date, class: 'form-control' %>
+      </div>
+    <% end %>
 
-<!--    <div class="field form-group scrollable">-->
-<!--      <%#= f.label :leader %><br/>-->
-      <%#= f.collection_check_boxes :isLeader, User.all, :id, :name do |b| %>
-<!--        <div class="form-check">-->
-          <%#= b.check_box(class: "form-check-input") %>
-          <%#= b.label class: "form-check-label" %>
-<!--        </div>-->
-      <%# end %>
-<!--    </div>-->
-
-    <div class="field form-group">
-      <%= f.label :start_date %>
-      <%= f.date_field :start_date, class: 'form-control' %>
-    </div>
-    <div class="field form-group">
-      <%= f.label :end_date %>
-      <%= f.date_field :end_date, class: 'form-control' %>
-    </div>
     <%= f.submit 'Add User to Project', class: "btn btn-secondary mt-3" %>
   <% end %>
 </div>
