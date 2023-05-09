@@ -9,6 +9,8 @@ class UserProjectsController < ApplicationController
     # users không thuộc project và department_id != nil
     @users_not_project = User.where.not(id: @project.users.pluck(:id)).where.not(department_id: nil)
     @users_to_project = UserProject.where(project_id: params[:project_id]) # users thuộc project
+    # authorize @project
+    authorize @project, policy_class: UserProjectsPolicy
   end
 
   def create
@@ -18,6 +20,7 @@ class UserProjectsController < ApplicationController
                          start_date: user_project_params[:start_date],
                          end_date: user_project_params[:end_date])
     end
+    authorize @project, policy_class: UserProjectsPolicy
     redirect_to project_path(user_project_params[:project_id])
     flash[:success] = "Create to Success!"
   end
@@ -26,13 +29,14 @@ class UserProjectsController < ApplicationController
     @project = Project.find(params[:project_id])
     @user_project = UserProject.find(params[:id])
     @user_to_project = UserProject.where(user_id: params[:format], project_id: params[:project_id])
-    puts '------------------------------------------------------'
-    p @user_to_project
-    puts '------------------------------------------------------'
+    authorize @project, policy_class: UserProjectsPolicy
   end
 
   def update
+    @project = Project.find(params[:project_id])
     @user_project = UserProject.find(params[:id])
+    authorize @project, policy_class: UserProjectsPolicy
+
     is_leader = user_project_params[:is_leader].include?(@user_project.user_id.to_s) ? true : false
 
     if @user_project.update(is_leader: is_leader)
@@ -45,10 +49,12 @@ class UserProjectsController < ApplicationController
   end
 
   def destroy
+    @project = Project.find(params[:project_id])
     @user_project = UserProject.find(params[:id])
     @user_project.destroy
     redirect_to project_path(params[:project_id])
     flash[:success] = "Delete user project to Success!"
+    authorize @project
   end
 
   def user_project_params

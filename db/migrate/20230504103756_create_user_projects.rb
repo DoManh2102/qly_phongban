@@ -5,7 +5,7 @@ class CreateUserProjects < ActiveRecord::Migration[6.1]
       t.integer :project_id
       t.boolean :is_leader, default: false
       t.string :start_date
-      t.string :end_date
+      t.string :end_date  
       t.foreign_key :users, foreign_key: true
       t.foreign_key :projects, foreign_key: true
       t.timestamps

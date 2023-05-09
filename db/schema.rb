@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_04_103756) do
+ActiveRecord::Schema.define(version: 2023_05_08_141139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,8 +52,9 @@ ActiveRecord::Schema.define(version: 2023_05_04_103756) do
     t.string "name"
     t.string "address"
     t.string "birthday"
-    t.integer "department_id"
     t.integer "role", default: 3
+    t.bigint "department_id"
+    t.index ["department_id"], name: "index_users_on_department_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -62,4 +63,5 @@ ActiveRecord::Schema.define(version: 2023_05_04_103756) do
   add_foreign_key "projects", "departments"
   add_foreign_key "user_projects", "projects"
   add_foreign_key "user_projects", "users"
+  add_foreign_key "users", "departments"
 end

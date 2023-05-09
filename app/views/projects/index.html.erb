@@ -2,7 +2,9 @@
 
 <h2 class="text-center py-3">All Project</h2>
 
-<%= link_to "+ Add New Project", new_project_path %>
+<% if current_user.admin? %>
+  <%= link_to "+ Add New Project", new_project_path, class: "btn btn-secondary" %>
+<% end %>
 <%#= will_paginate %>
 
 <table class="table mt-3">
@@ -18,6 +20,8 @@
     <th scope="col"></th>
     <th scope="col"></th>
     <th scope="col"></th>
+    <th scope="col"></th>
+
   </tr>
   </thead>
   <tbody>
@@ -27,7 +31,7 @@
       <td> <%= project.name %></td>
       <td>
         <% project.user_projects.each do |user_project| %>
-          <% if user_project.is_leader %>
+          <% if user_project.PM? %>
             <%= user_project.user.name %><br>
           <% end %>
         <% end %>
@@ -41,19 +45,20 @@
         <%= project.user_projects.first&.end_date %>
       </td>
       <td>
-        <%= link_to "Detail", project_path(project) %>
+        <% if current_user.admin? || project.member_project?(current_user) %>
+          <%= link_to "Detail", project_path(project), class: "btn btn-info btn_action" %>
+        <% end %>
       </td>
       <td>
-        <%= link_to "Edit", edit_project_path(project) %>
+        <% if current_user.admin? %>
+          <%= link_to "Edit", edit_project_path(project), class: "btn btn-primary btn_action" %>
+        <% end %>
       </td>
       <td>
-        <%= button_to 'Destroy', project, method: :delete, data: { confirm: "Are you sure?" }, class:"btn btn-secondary" %>
-      </td>
-      <!--      <td>-->
-      <%# if current_user.admin? %>
-      <%#= button_to 'Destroy', user, method: :delete, data: { confirm: "Are you sure?" } %>
-      <%# end %>
-      <!--      </td>-->
+        <% if current_user.admin? %>
+          <%= button_to 'Destroy', project, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn_action" %>
+        <% end %>
+      <td>
     </tr>
   <% end %>
   </tbody>

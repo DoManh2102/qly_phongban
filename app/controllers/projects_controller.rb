@@ -4,26 +4,26 @@ class ProjectsController < ApplicationController
   end
   def index
     @projects = Project.all
+    authorize @projects
   end
 
   def show
     @project = Project.find(params[:id])
     @users_project = UserProject.where(project_id: params[:id])
+    authorize @project
     # lấy ra mảng user là leader và thuộc project
     @users_leader = UserProject.where(project_id: @project.id, is_leader: true)
-
-    puts '----------------------------------'
-    p @users_leader
-    puts '----------------------------------'
   end
 
   def new
     @departments = Department.all
     @project = Project.new
+    authorize @project
   end
 
   def create
     @project = Project.new(project_param)
+    authorize @project
     if @project.save
       flash[:success] = "Create to Success!"
       redirect_to projects_path
@@ -35,13 +35,13 @@ class ProjectsController < ApplicationController
 
   def edit
     @project = Project.find(params[:id])
+    authorize @project
   end
 
   def update
     # byebug
     @project = Project.find(params[:id])
-    puts '------------------------------'
-    p project_param
+    authorize @project
     if @project.update(project_param)
       redirect_to action: :index
       flash[:success] = "Update to Success!"
@@ -53,6 +53,7 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project = Project.find(params[:id])
+    authorize @project
     if @project.destroy
       flash[:success] = 'Project was successfully deleted.'
     else

@@ -25,6 +25,10 @@
     text-decoration: none;
 }
 
+.btn_action{
+    width: 80px;
+}
+
 .scrollable {
     max-height: 150px;
     overflow-y: scroll;

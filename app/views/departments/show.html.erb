@@ -3,7 +3,7 @@
   ** <%= @department.name %> **
 </h4>
 <strong>Leader: </strong> <%= @user_leader&.name %><br/>
-<strong>Number member: </strong> <%= @department.user.length %><br/>
+<strong>Number member: </strong> <%= @department.users.length %><br/>
 <strong>Number project: </strong> <%= @department.projects.length %><br/>
 <strong>Description: </strong> <%= @department.description %><br/>
 
@@ -32,20 +32,18 @@
       <td> <%= user.id %></td>
       <td> <%= user.name %></td>
       <td> <%= user.email %></td>
-      <%# byebug %>
       <% if @user_leader&.id == user.id %>
         <td> PM</td>
       <% else %>
         <td><%= user.role %></td>
       <% end %>
       <td> <%= user.birthday %></td>
-      <!--      <td> <%#= user.role %></td>-->
       <td>
         <%= link_to "Detail", user_path(user) %>
       </td>
-      <td>
-        <%= link_to "Destroy" %>
-      </td>
+      <!--      <td>-->
+      <%#= link_to "Destroy" %>
+      <!--      </td>-->
       <!-- <td> -->
       <%# if current_user.admin? %>
       <%#= button_to 'Destroy', user, method: :delete, data: { confirm: "Are you sure?" } %>

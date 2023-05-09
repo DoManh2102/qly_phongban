@@ -17,11 +17,9 @@
 
 <h3 class="text-center">List User to Project</h3>
 
-<%# if @project.user_projects.length <= 0 %>
-<button class="btn-add btn btn-secondary">
-  <%= link_to "+ Add New User to Project", new_project_user_project_path(@project) %>
-</button>
-<%# end %>
+<% if current_user.admin? || @project.pm?(current_user) %>
+  <%= link_to "+ Add New User to Project", new_project_user_project_path(@project), class: "btn-add btn btn-secondary" %>
+<% end %>
 
 <table class="table mt-3">
   <thead>
@@ -30,32 +28,33 @@
     <th scope="col">User Name</th>
     <th scope="col">Role</th>
     <th scope="col">Department</th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-    <th scope="col"></th>
+    <th scope="col" style="width:100px"></th>
+    <th scope="col" style="width:100px"></th>
+    <th scope="col" style="width:100px"></th>
   </tr>
   </thead>
   <% @users_project.each_with_index do |user_project, index| %>
     <tr class="text-center">
       <td> <%= index + 1 %></td>
       <td> <%= user_project.user.name %></td>
-      <!--      <td> <%#= user_project.project.name %></td>-->
       <td>
-        <% if user_project.is_leader %>
-          <%= "Leader" %>
-        <% else %>
-          <%= "employee" %>
-        <% end %>
+        <%= user_project.is_leader %>
       </td>
       <td> <%= user_project.user.department&.name %></td>
       <td>
-        <%= link_to "Detail", user_path(user_project.user.id) %>
+        <% if current_user.admin? || current_user.hr? || @project.pm?(current_user) || current_user == user_project.user %>
+          <%= link_to "Detail", user_path(user_project.user.id), class: "btn btn-info btn_action" %>
+        <% end %>
       </td>
       <td>
-        <%= link_to "Edit", edit_project_user_project_path(@project, user_project, user_project.user) %>
+        <% if current_user.admin? || @project.department.is_leader?(current_user) %>
+          <%= link_to "Edit", edit_project_user_project_path(@project, user_project, user_project.user), class: "btn btn-primary btn_action" %>
+        <% end %>
       </td>
       <td>
-        <%= button_to "Destroy", project_user_project_path(@project, user_project), method: :delete, class: "btn btn-secondary" %>
+        <% if current_user.admin? || @project.department.is_leader?(current_user) %>
+          <%= button_to "Destroy", project_user_project_path(@project, user_project), method: :delete, class: "btn btn-danger btn_action" %>
+        <% end %>
       </td>
     </tr>
   <% end %>
