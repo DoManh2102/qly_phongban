@@ -28,7 +28,7 @@ class DepartmentsController < ApplicationController
       flash[:success] = "Create to Success!"
       redirect_to departments_path
     else
-      flash[:danger] = "Error"
+      flash[:danger] = "Error Create"
       redirect_to action: :new
     end
   end
