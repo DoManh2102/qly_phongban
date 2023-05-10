@@ -1,18 +1,22 @@
 class UserController < ApplicationController
   def index
     @users = User.all
+    authorize @users
   end
 
   def show
     @user = User.find(params[:id])
+    authorize @user
   end
 
   def new
     @user = User.new
+    authorize @user
   end
 
   def create
     @user = User.new(user_param)
+    authorize @user
     p @user
     if @user.save
       flash[:success] = "Create to Success!"
@@ -25,6 +29,7 @@ class UserController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
+    authorize @user
     if @user.destroy
       redirect_to user_index_path
       flash[:success] = "Destroy user Success!"
@@ -36,6 +41,7 @@ class UserController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    # authorize @user
   end
 
   def update
@@ -44,6 +50,8 @@ class UserController < ApplicationController
     role_value = 3 if user_param[:role] == "employee"
 
     @user = User.find(params[:id])
+    # authorize @user
+
     if @user.update(role: role_value)
       redirect_to user_index_path
       flash[:success] = "Update to Success!"

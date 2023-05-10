@@ -2,7 +2,7 @@
 
 <h2 class="text-center py-3">User</h2>
 
-<%= link_to "+ Add New User", new_user_path %>
+<%= link_to "+ Add New User", new_user_path, class: "btn btn-secondary" %>
 
 <%#= will_paginate %>
 
@@ -30,14 +30,18 @@
       <td> <%= user.birthday %></td>
       <td> <%= user.role %></td>
       <td>
-        <%= link_to "Detail", user_path(user) %>
+        <% if current_user.admin? || current_user.hr? || current_user == user || current_user.id == user.department.user_id %>
+          <%= link_to "Detail", user_path(user), class: "btn btn-info btn_action" %>
+        <% end %>
       </td>
       <td>
-        <%= link_to "Edit", edit_user_path(user) %>
+        <%# if current_user.admin? %>
+          <%= link_to "Edit", edit_user_path(user), class: "btn btn-primary btn_action" %>
+        <%# end %>
       </td>
       <td>
         <% if current_user.admin? %>
-          <%= button_to 'Destroy', user, method: :delete, data: { confirm: "Are you sure?" } %>
+          <%= button_to 'Destroy', user, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn_action" %>
         <% end %>
       </td>
     </tr>

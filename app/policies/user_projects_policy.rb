@@ -15,7 +15,6 @@ class UserProjectsPolicy
   end
 
   def edit?
-    p project.department.is_leader?(user)
     user.admin? || project.department.is_leader?(user)
   end
 

@@ -28,7 +28,6 @@ class DepartmentsController < ApplicationController
       flash[:success] = "Create to Success!"
       redirect_to departments_path
     else
-      byebug
       flash[:danger] = "Error"
       redirect_to action: :new
     end

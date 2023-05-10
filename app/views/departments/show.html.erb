@@ -10,9 +10,7 @@
 <br>
 <h4 class="text-center">List User to Department</h4>
 
-<div class="btn btn-secondary">
-  <%= link_to "+ Edit Number User to Department", edit_department_users_department_path(@department) %>
-</div>
+<%= link_to "+ Edit Number User to Department", edit_department_users_department_path(@department), class: "btn btn-secondary" %>
 
 <table class="table mt-3">
   <thead>
@@ -21,9 +19,6 @@
     <th scope="col">Name</th>
     <th scope="col">Email</th>
     <th scope="col">Role</th>
-    <th scope="col">Description</th>
-    <th scope="col"></th>
-    <th scope="col"></th>
     <th scope="col"></th>
   </tr>
   </thead>
@@ -33,22 +28,13 @@
       <td> <%= user.name %></td>
       <td> <%= user.email %></td>
       <% if @user_leader&.id == user.id %>
-        <td> PM</td>
+        <td>PM</td>
       <% else %>
         <td><%= user.role %></td>
       <% end %>
-      <td> <%= user.birthday %></td>
       <td>
         <%= link_to "Detail", user_path(user) %>
       </td>
-      <!--      <td>-->
-      <%#= link_to "Destroy" %>
-      <!--      </td>-->
-      <!-- <td> -->
-      <%# if current_user.admin? %>
-      <%#= button_to 'Destroy', user, method: :delete, data: { confirm: "Are you sure?" } %>
-      <%# end %>
-      <!--</td>-->
     </tr>
   <% end %>
   <tbody>
@@ -57,7 +43,10 @@
 
 <br>
 
-<h4>List Project to Department</h4>
+<h4 class="text-center">List Project to Department</h4>
+
+<%= link_to "+ Edit Number User to Department", class: "btn btn-secondary" %>
+
 <table class="table mt-3">
   <thead>
   <tr class="thead-dark text-center">
@@ -65,7 +54,6 @@
     <th scope="col">Name</th>
     <th scope="col">Number Member</th>
     <th scope="col">Leader Project</th>
-    <th scope="col">Description</th>
     <th scope="col"></th>
     <th scope="col"></th>
     <th scope="col"></th>
