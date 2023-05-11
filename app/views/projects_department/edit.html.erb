@@ -1,0 +1,47 @@
+<% provide(:title, 'Add User to Department') %>
+<div style="width: 600px">
+  <h2 class="text-center">Edit Number Project to Department</h2>
+  <%= form_with(model: @department, url: department_projects_department_path(@department), method: :put) do |f| %>
+    <div class="field form-group scrollable">
+      <%= f.label :project_list %><br/>
+      <%= f.collection_check_boxes :project_ids, @projects, :id, :name do |b| %>
+        <div class="form-check">
+          <% if @projects_department.include?(b.object.id) %>
+            <%= b.check_box(class: "form-check-input", checked: true) %>
+          <% else %>
+            <%= b.check_box(class: "form-check-input") %>
+          <% end %>
+          <%= b.label class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+    <%= f.submit 'Edit Number User to Department', class: "btn btn-secondary mt-3" %>
+  <% end %>
+
+  <hr>
+
+  <h2 class="text-center">Project in <%= @department.name %></h2>
+  <% if @projects_department.present? %>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Number Member</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @projects_department.each do |project_department| %>
+        <tr>
+          <td><%= project_department.name %></td>
+          <td><%= project_department.user_projects.length %></td>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No users in this department.</p>
+  <% end %>
+</div>
+
+
+

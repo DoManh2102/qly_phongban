@@ -19,47 +19,52 @@
     <th scope="col">Project Time</th>
     <th scope="col"></th>
     <th scope="col"></th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-
   </tr>
   </thead>
   <tbody>
   <% @projects.each_with_index do |project, index| %>
-    <tr class="text-center">
-      <td> <%= index + 1 %></td>
-      <td> <%= project.name %></td>
-      <td>
-        <% project.user_projects.each do |user_project| %>
-          <% if user_project.PM? %>
-            <%= user_project.user.name %><br>
+    <% if current_user.admin? || project.member_project?(current_user) || project.department&.is_leader?(current_user)%>
+      <tr class="text-center">
+        <td> <%= index + 1 %></td>
+        <td class="detail">
+          <% if current_user.admin? || project.member_project?(current_user) || project.department&.is_leader?(current_user) %>
+            <%= link_to project.name, project_path(project) %>
+          <% else %>
+            <%= project.name %>
           <% end %>
-        <% end %>
-      </td>
-      <td> <%= project.user_projects.length %></td>
-      <td> <%= Department.find_by(id: project.department_id)&.name %></td>
-      <td> <%= project.status %></td>
-      <td>
-        <%= project.user_projects.first&.start_date %>
-        -
-        <%= project.user_projects.first&.end_date %>
-      </td>
-      <td>
-        <% if current_user.admin? || project.member_project?(current_user) %>
-          <%= link_to "Detail", project_path(project), class: "btn btn-info btn_action" %>
-        <% end %>
-      </td>
-      <td>
-        <% if current_user.admin? %>
-          <%= link_to "Edit", edit_project_path(project), class: "btn btn-primary btn_action" %>
-        <% end %>
-      </td>
-      <td>
-        <% if current_user.admin? %>
-          <%= button_to 'Destroy', project, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn_action" %>
-        <% end %>
-      <td>
-    </tr>
+        </td>
+        <td>
+          <% project.user_projects.each do |user_project| %>
+            <% if user_project.PM? %>
+              <%= user_project.user.name %><br>
+            <% end %>
+          <% end %>
+        </td>
+        <td> <%= project.user_projects.length %></td>
+        <td> <%= Department.find_by(id: project.department_id)&.name %></td>
+        <td> <%= project.status %></td>
+        <td>
+          <%= project.user_projects.first&.start_date %>
+          -
+          <%= project.user_projects.first&.end_date %>
+        </td>
+<!--        <td>-->
+          <%# if current_user.admin? || project.member_project?(current_user) || project.department&.is_leader?(current_user) %>
+            <%#= link_to "Detail", project_path(project), class: "btn btn-info btn_action" %>
+          <%# end %>
+<!--        </td>-->
+        <td>
+          <% if current_user.admin? %>
+            <%= link_to "Edit", edit_project_path(project), class: "btn btn-primary btn_action" %>
+          <% end %>
+        </td>
+        <td>
+          <% if current_user.admin? %>
+            <%= button_to 'Destroy', project, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn_action" %>
+          <% end %>
+        <td>
+      </tr>
+    <% end %>
   <% end %>
   </tbody>
 </table>

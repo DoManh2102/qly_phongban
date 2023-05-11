@@ -2,7 +2,9 @@
 
 <h2 class="text-center py-3">User</h2>
 
-<%= link_to "+ Add New User", new_user_path, class: "btn btn-secondary" %>
+<% if current_user.admin? %>
+  <%= link_to "+ Add New User", new_user_path, class: "btn btn-secondary" %>
+<% end %>
 
 <%#= will_paginate %>
 
@@ -17,26 +19,26 @@
     <th scope="col">Role</th>
     <th scope="col"></th>
     <th scope="col"></th>
-    <th scope="col"></th>
   </tr>
   </thead>
   <tbody>
   <% @users.each_with_index do |user, index| %>
     <tr class="text-center">
-      <td> <%= user.id %></td>
-      <td> <%= user.name %></td>
+      <td> <%= index + 1 %></td>
+      <td class="detail">
+        <% if current_user.admin? || current_user.hr? || current_user == user #|| user.id == user.department&.user_id %>
+          <%= link_to user.name, user_path(user) %>
+        <% else %>
+          <%= user.name %>
+        <% end %>
+      </td>
       <td> <%= user.email %></td>
       <td> <%= user.address %></td>
       <td> <%= user.birthday %></td>
       <td> <%= user.role %></td>
       <td>
-        <% if current_user.admin? || current_user.hr? || current_user == user || current_user.id == user.department.user_id %>
-          <%= link_to "Detail", user_path(user), class: "btn btn-info btn_action" %>
-        <% end %>
-      </td>
-      <td>
         <%# if current_user.admin? %>
-          <%= link_to "Edit", edit_user_path(user), class: "btn btn-primary btn_action" %>
+        <%= link_to "Edit", edit_user_path(user), class: "btn btn-primary btn_action" %>
         <%# end %>
       </td>
       <td>

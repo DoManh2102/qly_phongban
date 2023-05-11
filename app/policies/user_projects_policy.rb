@@ -7,11 +7,11 @@ class UserProjectsPolicy
   end
 
   def new?
-    user.admin? || project.pm?(user)
+    user.admin? || project&.department&.is_leader?(user) || project&.pm?(user)
   end
 
   def create?
-    user.admin? || project.pm?(user)
+    user.admin? || project&.department&.is_leader?(user) || project&.pm?(user)
   end
 
   def edit?
@@ -23,6 +23,6 @@ class UserProjectsPolicy
   end
 
   def destroy?
-    user.admin? || project.department.is_leader?(user)
+    user.admin? || project.department.is_leader?(user) || project&.pm?(user)
   end
 end

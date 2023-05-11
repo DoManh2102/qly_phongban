@@ -17,7 +17,7 @@
 
 <h3 class="text-center">List User to Project</h3>
 
-<% if current_user.admin? || @project.pm?(current_user) %>
+<% if current_user.admin? || @project.department.is_leader?(current_user) || @project.pm?(current_user) %>
   <%= link_to "+ Add New User to Project", new_project_user_project_path(@project), class: "btn-add btn btn-secondary" %>
 <% end %>
 
@@ -36,23 +36,24 @@
   <% @users_project.each_with_index do |user_project, index| %>
     <tr class="text-center">
       <td> <%= index + 1 %></td>
-      <td> <%= user_project.user.name %></td>
+      <td>
+        <% if current_user.admin? || current_user.hr? || @project.pm?(current_user) || current_user == user_project.user || current_user.id == user_project.user.department&.user_id %>
+          <%= link_to user_project.user.name, user_path(user_project.user.id) %>
+        <% else %>
+          <%= user_project.user.name %>
+        <% end %>
+      </td>
       <td>
         <%= user_project.is_leader %>
       </td>
       <td> <%= user_project.user.department&.name %></td>
-      <td>
-        <% if current_user.admin? || current_user.hr? || @project.pm?(current_user) || current_user == user_project.user %>
-          <%= link_to "Detail", user_path(user_project.user.id), class: "btn btn-info btn_action" %>
-        <% end %>
-      </td>
       <td>
         <% if current_user.admin? || @project.department.is_leader?(current_user) %>
           <%= link_to "Edit", edit_project_user_project_path(@project, user_project, user_project.user), class: "btn btn-primary btn_action" %>
         <% end %>
       </td>
       <td>
-        <% if current_user.admin? || @project.department.is_leader?(current_user) %>
+        <% if current_user.admin? || @project.department.is_leader?(current_user) || @project.pm?(current_user) %>
           <%= button_to "Destroy", project_user_project_path(@project, user_project), method: :delete, class: "btn btn-danger btn_action" %>
         <% end %>
       </td>

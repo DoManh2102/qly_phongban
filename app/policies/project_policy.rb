@@ -7,18 +7,19 @@ class ProjectPolicy
   end
 
   def index?
-    user.present?
+    user.present? || project.member_project?(user) || project.department&.is_leader?(user)
   end
 
   def show?
-    user.admin? || project.member_project?(user)
+    # current_user là: admin? || member_project? || leader department của project
+    user.admin? || project.member_project?(user) || project.department&.is_leader?(user)
   end
 
   def new?
     user.admin?
   end
 
-  def create
+  def create?
     user.admin?
   end
 

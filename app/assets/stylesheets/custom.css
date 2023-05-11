@@ -29,6 +29,10 @@
     width: 80px;
 }
 
+.btn_dropdown{
+    width: 100%;
+}
+
 .scrollable {
     max-height: 150px;
     overflow-y: scroll;
@@ -64,6 +68,11 @@ select{
 
 .alert-alert{
     background-color: #B00100;
+    color: white;
+}
+
+.detail a{
+    /*color: white;*/
 }
 
 

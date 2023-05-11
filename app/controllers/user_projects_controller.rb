@@ -14,6 +14,7 @@ class UserProjectsController < ApplicationController
   end
 
   def create
+    @project = Project.find(params[:project_id])
     user_project_params[:user_id].each do |user_id|
       UserProject.create(user_id: user_id,
                          project_id: user_project_params[:project_id],
@@ -54,7 +55,7 @@ class UserProjectsController < ApplicationController
     @user_project.destroy
     redirect_to project_path(params[:project_id])
     flash[:success] = "Delete user project to Success!"
-    authorize @project
+    authorize @project, policy_class: UserProjectsPolicy
   end
 
   def user_project_params

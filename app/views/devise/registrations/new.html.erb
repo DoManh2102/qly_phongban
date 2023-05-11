@@ -1,4 +1,3 @@
-
 <div style="width: 400px">
   <h2 class="text-center">Sign up</h2>
 
@@ -15,7 +14,7 @@
       <% if @minimum_password_length %>
         <em>(<%= @minimum_password_length %> characters minimum)</em>
       <% end %><br/>
-      <%= f.password_field :password, autocomplete: "new-password", class: "form-control"%>
+      <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
     </div>
 
     <div class="field form-group">
@@ -38,16 +37,11 @@
       <%= f.date_field :birthday, class: "form-control" %>
     </div>
 
+
 <!--    <div class="field form-group">-->
-<!--      <%#= f.label :department_id %><br/>-->
-      <%#= f.collection_select :department_id, Department.all, :id, :name, class:"form-control" %>
+      <%#= f.label :role %>
+      <%#= f.collection_select :role, role, :id, :name, class: "form-control" %>
 <!--    </div>-->
-
-
-    <!--  <div class="field form-group">-->
-    <%#= f.label :role %>
-    <%#= f.collection_select :role, role, :id, :name, class:"form-control" %>
-<!--      </div>-->
 
     <br>
     <div class="actions">
