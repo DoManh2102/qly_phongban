@@ -13,11 +13,13 @@
 
     <div class="field form-group d-flex">
       <%= f.label :status, class:"mr-5" %><br/>
+      <% p @project.status %><br/>
+
       <div>
-        <%= f.radio_button :status, true %>
+        <%= f.radio_button :status, true, checked: @project.status != "Processing" %>
         <%= f.label :status, "Done" %>
         <br>
-        <%= f.radio_button :status, false %>
+        <%= f.radio_button :status, false, checked: @project.status == "Processing" %>
         <%= f.label :status, "Processing" %>
       </div>
     </div>

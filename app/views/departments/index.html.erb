@@ -2,7 +2,10 @@
 
 <h2 class="text-center py-3">All Department</h2>
 
-<%= link_to "+ Add New Department", new_department_path, class: "btn btn-secondary" %>
+<% if current_user.admin? %>
+  <%= link_to "+ Add New Department", new_department_path, class: "btn btn-secondary" %>
+<% end %>
+
 <%= will_paginate %>
 
 <table class="table mt-3">
@@ -16,14 +19,19 @@
     <th scope="col">Description</th>
     <th scope="col"></th>
     <th scope="col"></th>
-    <th scope="col"></th>
   </tr>
   </thead>
   <tbody>
   <% @departments.each_with_index do |department, index| %>
     <tr class="text-center">
       <td> <%= index + 1 %></td>
-      <td> <%= department.name %></td>
+      <td class="detail">
+        <% if current_user.admin? || department.is_leader?(current_user) || department.member_department?(current_user) %>
+          <%= link_to department.name, department_path(department) %>
+        <% else %>
+          <%= department.name %>
+        <% end %>
+      </td>
       <td> <%= department.users.length %></td>
       <td> <%= department.projects.length %></td>
       <td>
@@ -31,18 +39,13 @@
       </td>
       <td> <%= department.description %></td>
       <td>
-        <% if current_user.admin? || department.is_leader?(current_user) %>
-          <%= link_to "Detail", department_path(department),class: "btn btn-info btn_action" %>
+        <% if current_user.admin? %>
+          <%= link_to "Edit", edit_department_path(department), class: "btn btn-primary btn_action" %>
         <% end %>
       </td>
       <td>
         <% if current_user.admin? %>
-          <%= link_to "Edit", edit_department_path(department),class: "btn btn-primary btn_action" %>
-        <% end %>
-      </td>
-      <td>
-        <% if current_user.admin? %>
-          <%= button_to 'Destroy', department, method: :delete, data: { confirm: "Are you sure?" },class: "btn btn-danger btn_action" %>
+          <%= button_to 'Destroy', department, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn_action" %>
         <% end %>
       </td>
     </tr>

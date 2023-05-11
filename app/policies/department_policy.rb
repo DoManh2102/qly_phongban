@@ -19,7 +19,7 @@ class DepartmentPolicy
   end
 
   def show?
-    user.admin? || @department.is_leader?(user)
+    user.admin? || @department.is_leader?(user) || @department.member_department?(user)
   end
 
   def edit?

@@ -10,7 +10,9 @@
 <br>
 <h4 class="text-center">List User to Department</h4>
 
-<%= link_to "+ Edit Number User to Department", edit_department_users_department_path(@department), class: "btn btn-secondary" %>
+<% if current_user.admin? %>
+  <%= link_to "+ Edit Number User to Department", edit_department_users_department_path(@department), class: "btn btn-secondary" %>
+<% end %>
 
 <table class="table mt-3">
   <thead>
@@ -24,17 +26,20 @@
   </thead>
   <% @users.each_with_index do |user, index| %>
     <tr class="text-center">
-      <td> <%= user.id %></td>
-      <td> <%= user.name %></td>
+      <td> <%= index + 1 %></td>
+      <td>
+        <% if current_user.admin? || current_user.hr? || current_user == user || current_user.id == user.department&.user_id %>
+          <%= link_to user.name, user_path(user) %>
+        <% else %>
+          <%= user.name %>
+        <% end %>
+      </td>
       <td> <%= user.email %></td>
       <% if @user_leader&.id == user.id %>
-        <td>PM</td>
+        <td>Leader</td>
       <% else %>
-        <td><%= user.role %></td>
+        <td>employee</td>
       <% end %>
-      <td>
-        <%= link_to "Detail", user_path(user) %>
-      </td>
     </tr>
   <% end %>
   <tbody>
@@ -45,9 +50,11 @@
 
 <h4 class="text-center">List Project to Department</h4>
 
-<%= link_to "+ Edit Number User to Department", class: "btn btn-secondary" %>
+<% if current_user.admin? %>
+  <%= link_to "+ Edit Number Project to Department", edit_department_projects_department_path(@department), class: "btn btn-secondary" %>
+<% end %>
 
-<table class="table mt-3">
+<table class="table mt-3" style="margin-bottom: 150px">
   <thead>
   <tr class="thead-dark text-center">
     <th scope="col">ID</th>
@@ -62,24 +69,19 @@
   <% @project.each_with_index do |project, index| %>
     <tr class="text-center">
       <td> <%= index + 1 %></td>
-      <td> <%= project.name %></td>
-      <% if @user_leader&.id == project.id %>
-        <td> PM</td>
-      <% else %>
-        <td><%= %></td>
-      <% end %>
-      <td> <%= project.user_projects.map %></td>
       <td>
-        <%= link_to "Detail" %>
+        <% if current_user.admin? || project.member_project?(current_user) || project.department&.is_leader?(current_user) %>
+          <%= link_to project.name, project_path(project) %>
+        <% else %>
+          <%= project.name %>
+        <% end %>
       </td>
+      <td> <%= project.user_projects.length %></td>
       <td>
-        <%= link_to "Destroy" %>
+        <% project.user_projects.select { |user_project| p user_project.is_leader == "PM" }.each do |user_project| %>
+          <%= user_project.user.name %>
+        <% end %>
       </td>
-      <!-- <td> -->
-      <%# if current_user.admin? %>
-      <%#= button_to 'Destroy', user, method: :delete, data: { confirm: "Are you sure?" } %>
-      <%# end %>
-      <!--</td>-->
     </tr>
   <% end %>
   <tbody>

@@ -4,7 +4,7 @@
     <br>
 
     <div class="field form-group d-flex form-leader">
-      <%= f.label :User_leader %>:
+      <%= f.label :User_PM %>:
       <%= f.select :is_leader, options_for_select(@user_to_project.map { |user_project| [user_project.user.name, user_project.user.id] }), include_blank: true, class: "form-control col-md-4" %>
     </div>
 
