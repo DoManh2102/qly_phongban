@@ -21,4 +21,7 @@ Rails.application.routes.draw do
   resources :projects do
     resources :user_projects
   end
+
+  scope "(:locale)", locale: /en|vi/ do
+  end
 end

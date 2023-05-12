@@ -1,7 +1,4 @@
 class DepartmentsController < ApplicationController
-  rescue_from ActiveRecord::InvalidForeignKey do |exception|
-    redirect_to departments_path, alert: "Error! Unable to delete Parts due to foreign key binding!"
-  end
 
   def index
     @departments = Department.paginate(page: params[:page], per_page: 10)
@@ -53,7 +50,7 @@ class DepartmentsController < ApplicationController
   def destroy
     @department = Department.find(params[:id])
     authorize @department
-    if @department.destroy
+    if @department.destroy!
       flash[:success] = 'Department was successfully deleted.'
     else
       flash[:error] = 'Unable to delete Parts due to foreign key binding'

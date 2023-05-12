@@ -1,6 +1,6 @@
 class Department < ApplicationRecord
   has_many :users
-  has_many :projects
+  has_many :projects, dependent: :destroy
 
   belongs_to :leader, class_name: 'User', foreign_key: 'user_id', optional: true
 

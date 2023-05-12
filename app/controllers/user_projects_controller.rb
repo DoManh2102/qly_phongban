@@ -29,7 +29,10 @@ class UserProjectsController < ApplicationController
   def edit
     @project = Project.find(params[:project_id])
     @user_project = UserProject.find(params[:id])
-    @user_to_project = UserProject.where(user_id: params[:format], project_id: params[:project_id])
+    @user = User.friendly.find(params[:format])
+    @user_to_project = UserProject.where(user_id: @user.id, project_id: params[:project_id])
+    puts "============"
+    p @user_to_project
     authorize @project, policy_class: UserProjectsPolicy
   end
 
@@ -50,12 +53,26 @@ class UserProjectsController < ApplicationController
   end
 
   def destroy
+    # current_user.projects.find(params[:id])
+    # Project.find(params[:id])
+
     @project = Project.find(params[:project_id])
     @user_project = UserProject.find(params[:id])
-    @user_project.destroy
-    redirect_to project_path(params[:project_id])
-    flash[:success] = "Delete user project to Success!"
-    authorize @project, policy_class: UserProjectsPolicy
+    puts "======================"
+    @pm_users_project = UserProject.where(project_id: params[:project_id], is_leader: 'PM')
+    @users_project = UserProject.where(project_id: params[:project_id])
+
+
+    if @pm_users_project.length > 0 && @pm_users_project.length <= 1 && @user_project.is_leader == "PM"
+      flash[:danger] = t('activerecord.errors.messages.min_1_pm')
+      redirect_to project_path(params[:project_id])
+      authorize @project, policy_class: UserProjectsPolicy
+    else
+      @user_project.destroy
+      redirect_to project_path(params[:project_id])
+      flash[:success] = "Delete user project to Success!"
+      authorize @project, policy_class: UserProjectsPolicy
+    end
   end
 
   def user_project_params

@@ -71,13 +71,25 @@ select{
     color: white;
 }
 
-.detail a{
-    /*color: white;*/
+.alert-error{
+    background-color: #B00100;
+    color: white;
 }
 
+.locale-select{
+    height: 35px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
 
+.locale-select button{
+    padding: 2px 15px;
+}
 
-
+.active {
+    background-color: cornflowerblue !important;
+    color: white;
+}
 
 
 

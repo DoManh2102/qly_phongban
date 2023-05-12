@@ -11,9 +11,9 @@ gem 'devise'
 gem 'pundit'
 gem 'will_paginate', '3.1.8'
 gem 'bootstrap-will_paginate', '1.0.0'
-# gem 'pry', '~> 0.13.1'
-# gem 'pry-rails', :group => :development
 gem 'byebug', '~> 9.0', '>= 9.0.5'
+gem 'rails-i18n'
+gem 'friendly_id', '~> 5.4.0'
 
 
 gem "sprockets-rails"
@@ -61,6 +61,7 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
 end
+
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
