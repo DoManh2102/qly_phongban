@@ -10,7 +10,7 @@ class UserController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.friendly.find(params[:id])
     authorize @user
   end
 
@@ -24,7 +24,7 @@ class UserController < ApplicationController
     authorize @user
     p @user
     if @user.save
-      flash[:success] = "Create to Success!"
+      flash[:success] = t('activerecord.success.create')
       redirect_to user_index_path
     else
       flash[:alert] = @user.errors.full_messages.join('. ')
@@ -33,10 +33,10 @@ class UserController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
+    @user = User.friendly.find(params[:id])
     authorize @user
     if @user.destroy
-      flash[:success] = "Destroy user Success!"
+      flash[:success] = t('activerecord.success.destroy')
       redirect_to user_index_path
     else
       flash[:error] = @user.errors.full_messages.join(". ")
@@ -45,12 +45,12 @@ class UserController < ApplicationController
   end
 
   def edit_info
-    @user = User.find(params[:id])
+    @user = User.friendly.find(params[:id])
     # authorize @user
   end
 
   def update_info
-    @user = User.find(params[:id])
+    @user = User.friendly.find(params[:id])
     # authorize @user
     if @user.update(edit_info_params)
       redirect_to user_path(@user)
@@ -61,7 +61,7 @@ class UserController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = User.friendly.find(params[:id])
     # authorize @user
   rescue
     flash[:danger] = "Can't edit"
@@ -73,15 +73,15 @@ class UserController < ApplicationController
     role_value = 2 if user_params[:role] == "hr"
     role_value = 3 if user_params[:role] == "employee"
 
-    @user = User.find(params[:id])
+    @user = User.friendly.find(params[:id])
     # authorize @user
 
     if @user.update(role: role_value, name: user_params[:name])
       redirect_to user_index_path
-      flash[:success] = "Update to Success!"
+      flash[:success] = t('activerecord.success.update')
     else
       redirect_to user_index_path
-      flash[:danger] = "Error! Update false"
+      flash[:danger] = t('activerecord.errors.messages.update')
     end
   end
 

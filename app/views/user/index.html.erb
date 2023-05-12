@@ -6,17 +6,16 @@
   <%= link_to "+ Add New User", new_user_path, class: "btn btn-secondary" %>
 <% end %>
 
-<%#= will_paginate %>
 
 <table class="table mt-3">
   <thead>
   <tr class="thead-dark text-center">
     <th scope="col">ID</th>
-    <th scope="col">Name</th>
-    <th scope="col">Email</th>
-    <th scope="col">Address</th>
-    <th scope="col">Birthday</th>
-    <th scope="col">Role</th>
+    <th scope="col"> <%= t('activerecord.attributes.user.name') %></th>
+    <th scope="col"> <%= t('activerecord.attributes.user.email') %></th>
+    <th scope="col"> <%= t('activerecord.attributes.user.address') %></th>
+    <th scope="col"> <%= t('activerecord.attributes.user.birthday') %></th>
+    <th scope="col"> <%= t('activerecord.attributes.user.role') %></th>
     <th scope="col"></th>
     <th scope="col"></th>
   </tr>
@@ -26,7 +25,7 @@
     <tr class="text-center">
       <td> <%= index + 1 %></td>
       <td class="detail">
-        <% if current_user.admin? || current_user.hr? || current_user == user #|| user.id == user.department&.user_id %>
+        <% if current_user.admin? || current_user.hr? || current_user == user || current_user.id == user.department&.user_id %>
           <%= link_to user.name, user_path(user) %>
         <% else %>
           <%= user.name %>
@@ -35,7 +34,15 @@
       <td> <%= user.email %></td>
       <td> <%= user.address %></td>
       <td> <%= user.birthday %></td>
-      <td> <%= user.role %></td>
+      <td>
+        <% if user.role == "admin" %>
+          <%= t('activerecord.models.admin') %>
+        <% elsif user.role == "hr" %>
+          <%= t('activerecord.models.hr') %>
+        <% elsif user.role == "employee" %>
+          <%= t('activerecord.models.employee') %>
+        <% end %>
+      </td>
       <td>
         <%# if current_user.admin? %>
         <%= link_to "Edit", edit_user_path(user), class: "btn btn-primary btn_action" %>

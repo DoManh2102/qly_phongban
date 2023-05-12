@@ -1,0 +1,28 @@
+vi:
+  activerecord:
+    models:
+      user: Người dùng
+      admin: Quản trị viên
+      hr: Nhân sự
+      employee: Nhân viên
+
+    attributes:
+      user:
+        name: Tên
+        email: Email
+        address: Địa chỉ
+        birthday: Ngày sinh
+        role: Vai trò
+        password: Mật khẩu
+        password_confirmation: Xác nhận mật khẩu
+    errors:
+      messages:
+        min_1_pm: Dự án phải có ít nhất 1 PM.
+        update: Lỗi! Cập nhật thất bại
+    success:
+      create: Tạo user thành công
+      update: Cập nhật thành công
+      destroy: Xóa user thành công
+
+
+

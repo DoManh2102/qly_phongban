@@ -11,7 +11,7 @@ class DepartmentPolicy
   end
 
   def new?
-    user.admin?
+    user.admin? || user.hr? || user.employee?
   end
 
   def create?
@@ -19,6 +19,7 @@ class DepartmentPolicy
   end
 
   def show?
+    #user.dp_leader? @department
     user.admin? || @department.is_leader?(user) || @department.member_department?(user)
   end
 
